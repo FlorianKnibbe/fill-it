@@ -45,4 +45,4 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 
 ## License
 
-This project is under GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
+This project is under GNU General Public License - see the [LICENSE](LICENSE) file for details
