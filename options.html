@@ -1,0 +1,57 @@
+<!--
+ * Fill-it
+ * Fill-it is Google Chrome extension design to fill HTML form with fake values in order to saving time when it comes to fill forms.
+ * 
+ * Copyright (C) 2018 Florian Knibbe
+ * 
+ * This file is part of Fill-it.
+ *
+ * Fill-it is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Fill-it is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Fill-it.  If not, see <https://www.gnu.org/licenses/>
+ *
+ -->
+
+<!DOCTYPE html>
+  <html>
+    <head>
+        <title>Fill-it - Parameters</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <div class="padding position-absolute w100 h100">
+            <h1>Fill-it parameters</h1>
+            <section class="padding-top display-flex h95">
+                <div class="flex_1 h100">
+                    <textarea class="bck-lightgrey w100 h100 scroll" name="paramFiller"></textarea>
+                </div>
+                <div style="width:325px;"  class="padding-left">
+                    <h3 class="padding-bottom">Helpers :</h3>
+                    <p><strong>targetName :</strong><br/>Targets fieds on "placeholder", "name" attributs and label (if empty => no filter)</p>
+                    <p class="padding-top"><strong>targetType :</strong><br/>Targets fields on "type" attribut (text,date,number,password...). Warning : for simplicity "textarea" is considered as input type, so you can filter on "textarea" type</p>
+                    <p class="padding-top"><strong>fillerValue :</strong><br/>Sets the pattern that the randomly generated value must follow to fill the field.</p>
+                    <p class="padding-top">By défault input "checkbox" and "radio" are checked randomly. Each "select" prompt will have a random data associated.</p>
+                    <h3 class="padding-top">Commands :</h3>
+                    <p class="padding-top"><strong>Auto fill all :</strong> CTRL + SHIFT + A</p>
+                    <p class="padding-top"><strong>Auto fill one :</strong> CTRL + DOUBLE CLICK</p>
+                    <p class="padding-top"><strong>Auto fill form :</strong> CTRL + SHIFT + F</p>
+                    <p class="padding-top">You can define an area into "form" with "data-filler" attribut (Instance : Ajax forms without "form" tag)</p>
+                    
+                    <button name="saveParam" class="btn margin-top w100">Sauvegarder</button>
+                </div>
+            </section>
+        </div>
+        <script src="assets/jquery.js"></script>
+        <script src="options.js"></script>
+    </body>
+  </html>
