@@ -1,7 +1,7 @@
 {
     "name": "Fill-it",
     "version": "1.0",
-    "description": "Fill-it is Google Chrome extension design to fill HTML form with fake values in order to saving time when it comes to fill forms. This extension is totally customisable by changing JSON parameters. WARNING Please note that default parameters are for French users but you can customize all of them as you want/need.",
+    "description": "Fill-it is Google Chrome extension design to fill HTML form with fake values.",
     "permissions": ["storage", "http://*/*", "https://*/*", "tabs"],
     "options_page": "options.html", 
     "background": {
