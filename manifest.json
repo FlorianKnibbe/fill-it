@@ -2,7 +2,7 @@
     "name": "Fill-it",
     "version": "1.0",
     "short_name": "Fillit",
-    "description": "Fill-it is Google Chrome extension design to fill HTML form with fake values.",
+    "description": "Fill HTML form with fake values.",
     "permissions": ["storage", "http://*/*", "https://*/*", "tabs"],
     "options_page": "options.html", 
     "background": {

@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your mac
 
 ### Installing
 
-Just install it from Google Chrome Store
+Just install it from [Google Chrome Store](https://chrome.google.com/webstore/detail/fill-it/fdkaefddgpceppjokdiffahhjgcaflke?hl=fr)
 
 OR
 
