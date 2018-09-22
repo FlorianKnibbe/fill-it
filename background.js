@@ -117,11 +117,9 @@ const defaultParameters = [
 
 chrome.runtime.onInstalled.addListener(function () {
     chrome.storage.sync.get(['fillerFormFrParameters'], function (result) {
-        console.log(result);
         if (typeof result.fillerFormFrParameters == 'undefined' || result.fillerFormFrParameters == null) {
             chrome.storage.sync.set({fillerFormFrParameters: defaultParameters}, function () {
                 // Initialisation OK !
-                console.log('set data !!');
             });
         }
     });

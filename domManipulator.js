@@ -107,7 +107,6 @@ var fillerField = function (field,params) {
     // SI c'est un select - pas besoin du regex on fait un random d'option
     if(fieldProps.tagName === 'select'){
         let randomOptionIndex = randomBetween(0,(field.find('option:enabled').length-1));
-        console.log("option:nth-child(" + randomOptionIndex + ")"+ field.find("option:nth-child(" + randomOptionIndex + ")").length);
         field.find("option:nth-child(" + randomOptionIndex + ")").prop("selected", true);
     }else if(fieldProps.tagName === 'input' && typeof fieldProps.type != 'undefined' && (fieldProps.type.toLowerCase() === 'radio' || fieldProps.type.toLowerCase() === 'checkbox') ){
         // Il faudrait optimiser pour ne pas passer sur chaque radio du meme nom...
@@ -119,7 +118,6 @@ var fillerField = function (field,params) {
         }
     }else{
         let fieldRegex = getRegex(params, fieldProps);
-        console.log("PATT : "+fieldRegex);
         if(fieldRegex != ''){
             field.val(new RandExp(fieldRegex).gen());
         }else{
@@ -132,31 +130,35 @@ var fillerField = function (field,params) {
                 if(typeof fieldProps.max != 'undefined' && fieldProps.max != null){
                     max = fieldProps.max;
                 }
-                console.log("random between "+min+" et "+max);
                 let randomInt = randomBetween(min,max);
-                console.log("Val = "+randomInt);
                 field.val(randomInt);
             }else if(fieldProps.type === 'text' || fieldProps.type === 'textarea'){
-                let pattern = '^[a-zA-Zéàù ]';
+                let pattern = '^([a-zA-Zéàù]{2,9}[ ]{1})';
                 let min, max;
                 
                 if(fieldProps.type === 'text'){
-                    min = 1;
-                    max = 4;
-                }else{
                     min = 5;
-                    max = 40;
+                    max = 100;
+                }else{
+                    min = 40;
+                    max = 200;
                 }
                 
                 if(typeof fieldProps.minLength != 'undefined'){
-                    min = fieldProps.minLength;
+                    min = Math.round(fieldProps.minLength/3);
+                    if(min < 1){
+                        min = 1;
+                    }
                 }
                 if(typeof fieldProps.maxLength != 'undefined'){
-                    max = fieldProps.maxLength;
+                    max = Math.round(fieldProps.maxLength/3);
                 }
                 pattern = pattern+'{'+min+','+max+'}';
-                console.log("Pattern : "+pattern);
-                field.val(new RandExp(pattern).gen());
+                let randomVal = new RandExp(pattern).gen();
+                if(randomVal.length >= fieldProps.maxLength){
+                    randomVal = randomVal.substr(0,fieldProps.maxLength);
+                }
+                field.val(randomVal);
             }
         }
     }

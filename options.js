@@ -28,7 +28,6 @@ $(function(){
     
     $('[name="saveParam"]').on('click',function(){
         let paramsFiller = $('[name="paramFiller"]').val();
-        console.log(JSON.parse(paramsFiller));
         try{
             let paramParse = JSON.parse(paramsFiller);
             chrome.storage.sync.set({fillerFormFrParameters: paramParse}, function() {
