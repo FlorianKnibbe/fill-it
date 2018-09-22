@@ -158,6 +158,7 @@ var fillerField = function (field,params) {
                 if(randomVal.length >= fieldProps.maxLength){
                     randomVal = randomVal.substr(0,fieldProps.maxLength);
                 }
+                console.log(randomVal);
                 field.val(randomVal);
             }
         }
