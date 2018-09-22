@@ -49,12 +49,12 @@ const defaultParameters = [
         fillerValue: "^[0-8]{1}[0-9]{1}[0-9]{2}0$"
     },
     {
-        targetName: "^ville$",
+        targetName: "^ville",
         targetType: "text",
-        fillerValue: "^(Paris|Melun|Troyes|Marseille|Sens|Dijon|Nime|Bordeau|Nogent|Amance)$"
+        fillerValue: "^(Paris|Melun|Troyes|Marseille|Sens|Dijon|Nime|Bordeaux|Nogent|Amance)$"
     },
     {
-        targetName: "(dénomination|libellé)",
+        targetName: "(dénomination|libellé|raison sociale)",
         targetType: "text",
         fillerValue: "^Entreprise de test [0-9a-zA-Zéèà]{4,10}$"
     },

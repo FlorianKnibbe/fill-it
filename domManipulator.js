@@ -137,7 +137,7 @@ var fillerField = function (field,params) {
                 console.log("Val = "+randomInt);
                 field.val(randomInt);
             }else if(fieldProps.type === 'text' || fieldProps.type === 'textarea'){
-                let pattern = '((adolescebat|autem|obstinatum|propositum|erga|haec|et|similia|multa|scrutand|à|stimulos|admovente|regina|quaé|abrupte|mariti|fortunas|trudebat|in|exitium|praeceps|cum|eum|potius|lenitate|feminea|ad|veritatis|humanitatisque|viam|reducere|utilia|suadendo|deberet|ut|in|Gordianorum|actibus|factitasse|Maximini|truculenti|illius|imperatoris|rettulimus|coniugem)[ ]{1})';
+                let pattern = '^[a-zA-Zéàù ]';
                 let min, max;
                 
                 if(fieldProps.type === 'text'){
