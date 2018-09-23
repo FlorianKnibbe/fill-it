@@ -105,6 +105,9 @@ section {
     padding-bottom: 1em;
 }
 
+.clearfix:before,.clearfix:after {content: " ";display: table;}
+.clearfix:after {clear: both;}
+
 .h100{
     height:100%;
 }
@@ -140,6 +143,13 @@ section {
 
 .btn:hover{
     background: #277694;
+}
+
+.btn-red{
+    background: #d61c1c;
+}
+.btn-red:hover{
+    background:#a21212;
 }
 
 body#bodyPopup{

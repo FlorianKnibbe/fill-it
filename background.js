@@ -125,3 +125,13 @@ chrome.runtime.onInstalled.addListener(function () {
     });
 
 });
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.action == "resetParams"){
+        chrome.storage.sync.set({fillerFormFrParameters: defaultParameters}, function () {
+            // reinit ok !
+        });
+        sendResponse({message: "Reset OK",params:defaultParameters});
+    }
+      
+  });

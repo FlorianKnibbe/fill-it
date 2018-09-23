@@ -37,6 +37,16 @@ $(function(){
             alert("JSON parsing error : ", e); 
         }
     });
+    
+    $('[name="resetParam"]').on('click',function(){
+       let conf = confirm("Are you sure you want to reset to default parameters");
+       if(conf === true){
+           chrome.runtime.sendMessage({action: "resetParams"}, function(response) {
+               $('[name="paramFiller"]').val(JSON.stringify(response.params, undefined, 4));
+               alert(response.message);
+          });
+       }
+    });
 });
 
 
