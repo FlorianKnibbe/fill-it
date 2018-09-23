@@ -37,7 +37,7 @@ Go on HTML form you want and try...
 
 ## Versioning
 
-I use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/FlorianKnibbe/fill-it). 
+I use [SemVer](http://semver.org/) for versioning. For the versions available, see the [manifest.json](https://github.com/FlorianKnibbe/fill-it/blob/master/manifest.json). 
 
 ## Authors
 
