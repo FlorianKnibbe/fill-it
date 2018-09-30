@@ -19,7 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Fill-it.  If not, see <https://www.gnu.org/licenses/>
  *
-*/
+ */
 
 var getFieldProperties = function (elem) {
 
@@ -34,10 +34,11 @@ var getFieldProperties = function (elem) {
         min: elem.attr('min'),
         max: elem.attr('max'),
         minLength: elem.attr('minlength'),
-        maxLength: elem.attr('maxlength')
+        maxLength: elem.attr('maxlength'),
+        pattern: elem.attr('pattern')
     };
-    
-    if(props.tagName === 'textarea'){
+
+    if (props.tagName === 'textarea') {
         props.type = 'textarea';
     }
     return props;
@@ -50,12 +51,12 @@ var randomBetween = function (min, max) {
 var getRegex = function (params, fieldProperties) {
     let fillerVal = '';
     for (let i in params) {
-        
+
         // Si il existe un filtre sur le nom et sur le type
-        if(params[i].targetName != '' && params[i].targetType != ''){
+        if (params[i].targetName != '' && params[i].targetType != '') {
             let regexTargetName = new RegExp(params[i].targetName, 'i');
             let regexTargetType = new RegExp(params[i].targetType, 'i');
-            
+
             if (typeof fieldProperties.type != 'undefined' && fieldProperties.type.match(regexTargetType) !== null) { // Respect le type...
                 //... alors test des autres attributs
                 if (typeof fieldProperties.placeholder != 'undefined' && fieldProperties.placeholder.match(regexTargetName) !== null) {
@@ -72,23 +73,23 @@ var getRegex = function (params, fieldProperties) {
                     break;
                 }
             } // Sinon c'est mort on passe au autre cas...
- 
-        }else if(params[i].targetName != ''){ // SI il existe juste un filtre sur le name etc..
+
+        } else if (params[i].targetName != '') { // SI il existe juste un filtre sur le name etc..
             let regexTargetName = new RegExp(params[i].targetName, 'i');
             if (typeof fieldProperties.placeholder != 'undefined' && fieldProperties.placeholder.match(regexTargetName) !== null) {
                 fillerVal = params[i].fillerValue;
                 break;
-            }else if (typeof fieldProperties.name != 'undefined' && fieldProperties.name.match(regexTargetName) !== null) {
+            } else if (typeof fieldProperties.name != 'undefined' && fieldProperties.name.match(regexTargetName) !== null) {
                 fillerVal = params[i].fillerValue;
                 break;
-            }  else if (typeof fieldProperties.labelPrev != 'undefined' && fieldProperties.labelPrev.match(regexTargetName) !== null) {
+            } else if (typeof fieldProperties.labelPrev != 'undefined' && fieldProperties.labelPrev.match(regexTargetName) !== null) {
                 fillerVal = params[i].fillerValue;
                 break;
             } else if (typeof fieldProperties.labelNext != 'undefined' && fieldProperties.labelNext.match(regexTargetName) !== null) {
                 fillerVal = params[i].fillerValue;
                 break;
             }
-        }else if(params[i].targetType != ''){ // Si il existe juste un filtre sur le type
+        } else if (params[i].targetType != '') { // Si il existe juste un filtre sur le type
             let regexTargetType = new RegExp(params[i].targetType, 'i');
             if (typeof fieldProperties.type != 'undefined' && fieldProperties.type.match(regexTargetType) !== null) {
                 fillerVal = params[i].fillerValue;
@@ -99,66 +100,70 @@ var getRegex = function (params, fieldProperties) {
     return fillerVal;
 };
 
-var fillerField = function (field,params) {
-    
+var fillerField = function (field, params) {
+
     // On récupère les propriétés du champ
     let fieldProps = getFieldProperties(field);
 
     // SI c'est un select - pas besoin du regex on fait un random d'option
-    if(fieldProps.tagName === 'select'){
-        let randomOptionIndex = randomBetween(0,(field.find('option:enabled').length-1));
+    if (fieldProps.tagName === 'select') {
+        let randomOptionIndex = randomBetween(0, (field.find('option:enabled').length - 1));
         field.find("option:nth-child(" + randomOptionIndex + ")").prop("selected", true);
-    }else if(fieldProps.tagName === 'input' && typeof fieldProps.type != 'undefined' && (fieldProps.type.toLowerCase() === 'radio' || fieldProps.type.toLowerCase() === 'checkbox') ){
+    } else if (fieldProps.tagName === 'input' && typeof fieldProps.type != 'undefined' && (fieldProps.type.toLowerCase() === 'radio' || fieldProps.type.toLowerCase() === 'checkbox')) {
         // Il faudrait optimiser pour ne pas passer sur chaque radio du meme nom...
-        let randomCheck = randomBetween(0,10);
-        if( (randomCheck % 2) === 0){
-            field.prop('checked',false);
-        }else{
-            field.prop('checked',true);
+        let randomCheck = randomBetween(0, 10);
+        if ((randomCheck % 2) === 0) {
+            field.prop('checked', false);
+        } else {
+            field.prop('checked', true);
         }
-    }else{
-        let fieldRegex = getRegex(params, fieldProps);
-        if(fieldRegex != ''){
-            field.val(new RandExp(fieldRegex).gen());
-        }else{
-            if(fieldProps.type === 'range' || fieldProps.type === 'number'){
-                let min = 1;
-                let max = 1000;
-                if(typeof fieldProps.min != 'undefined' && fieldProps.min != null){
-                    min = fieldProps.min;
-                }
-                if(typeof fieldProps.max != 'undefined' && fieldProps.max != null){
-                    max = fieldProps.max;
-                }
-                let randomInt = randomBetween(min,max);
-                field.val(randomInt);
-            }else if(fieldProps.type === 'text' || fieldProps.type === 'textarea'){
-                let pattern = '^([a-zA-Zéàù]{2,9}[ ]{1})';
-                let min, max;
-                
-                if(fieldProps.type === 'text'){
-                    min = 5;
-                    max = 100;
-                }else{
-                    min = 40;
-                    max = 200;
-                }
-                
-                if(typeof fieldProps.minLength != 'undefined'){
-                    min = Math.round(fieldProps.minLength/3);
-                    if(min < 1){
-                        min = 1;
+    } else {
+        if (typeof fieldProps.pattern != 'undefined' && fieldProps.pattern != null && fieldProps.pattern != '') {
+            field.val(new RandExp(fieldProps.pattern).gen());
+        } else {
+            let fieldRegex = getRegex(params, fieldProps);
+            if (fieldRegex != '') {
+                field.val(new RandExp(fieldRegex).gen());
+            } else {
+                if (fieldProps.type === 'range' || fieldProps.type === 'number') {
+                    let min = 1;
+                    let max = 1000;
+                    if (typeof fieldProps.min != 'undefined' && fieldProps.min != null) {
+                        min = fieldProps.min;
                     }
+                    if (typeof fieldProps.max != 'undefined' && fieldProps.max != null) {
+                        max = fieldProps.max;
+                    }
+                    let randomInt = randomBetween(min, max);
+                    field.val(randomInt);
+                } else if (fieldProps.type === 'text' || fieldProps.type === 'textarea') {
+                    let pattern = '^([a-zA-Zéàù]{2,9}[ ]{1})';
+                    let min, max;
+
+                    if (fieldProps.type === 'text') {
+                        min = 5;
+                        max = 100;
+                    } else {
+                        min = 40;
+                        max = 200;
+                    }
+
+                    if (typeof fieldProps.minLength != 'undefined') {
+                        min = Math.round(fieldProps.minLength / 3);
+                        if (min < 1) {
+                            min = 1;
+                        }
+                    }
+                    if (typeof fieldProps.maxLength != 'undefined') {
+                        max = Math.round(fieldProps.maxLength / 3);
+                    }
+                    pattern = pattern + '{' + min + ',' + max + '}';
+                    let randomVal = new RandExp(pattern).gen();
+                    if (randomVal.length >= fieldProps.maxLength) {
+                        randomVal = randomVal.substr(0, fieldProps.maxLength);
+                    }
+                    field.val(randomVal);
                 }
-                if(typeof fieldProps.maxLength != 'undefined'){
-                    max = Math.round(fieldProps.maxLength/3);
-                }
-                pattern = pattern+'{'+min+','+max+'}';
-                let randomVal = new RandExp(pattern).gen();
-                if(randomVal.length >= fieldProps.maxLength){
-                    randomVal = randomVal.substr(0,fieldProps.maxLength);
-                }
-                field.val(randomVal);
             }
         }
     }
@@ -168,35 +173,35 @@ var formFillerParam;
 
 // Dom ready
 $(function () {
-    
-    chrome.storage.sync.get(['fillerFormFrParameters'], function(result) {
+
+    chrome.storage.sync.get(['fillerFormFrParameters'], function (result) {
         formFillerParam = result.fillerFormFrParameters;
     });
-    
+
     // Bouble click sur champ
-    $('body').on('dblclick', 'input:enabled, textarea:enabled, select:enabled',function (e) {
+    $('body').on('dblclick', 'input:enabled, textarea:enabled, select:enabled', function (e) {
         if (e.ctrlKey === true) {
-            fillerField($(this),formFillerParam);
+            fillerField($(this), formFillerParam);
         }
     });
-    
-    $('body').on('keydown', 'input:enabled, textarea:enabled, select:enabled',function (e) {
-        
+
+    $('body').on('keydown', 'input:enabled, textarea:enabled, select:enabled', function (e) {
+
         if (e.key == 'A' && e.ctrlKey === true && e.shiftKey === true) {
-            $('input:enabled, textarea:enabled, select:enabled').each(function () {
-                fillerField($(this),formFillerParam);
+            $('input:enabled, textarea:enabled, select:enabled').filter(':visible').each(function () {
+                fillerField($(this), formFillerParam);
             });
-        }else if(e.key == 'F' && e.ctrlKey === true && e.shiftKey === true){
+        } else if (e.key == 'F' && e.ctrlKey === true && e.shiftKey === true) {
             let fillerF = $(this).closest('[data-filler]');
-            if(fillerF.length > 0){
-                fillerF.find('input:enabled, textarea:enabled, select:enabled').each(function () {
-                    fillerField($(this),formFillerParam);
+            if (fillerF.length > 0) {
+                fillerF.find('input:enabled, textarea:enabled, select:enabled').filter(':visible').each(function () {
+                    fillerField($(this), formFillerParam);
                 });
-            }else{
+            } else {
                 let fillerF = $(this).closest('form');
-                if(fillerF.length > 0){
-                    fillerF.find('input:enabled, textarea:enabled, select:enabled').each(function () {
-                        fillerField($(this),formFillerParam);
+                if (fillerF.length > 0) {
+                    fillerF.find('input:enabled, textarea:enabled, select:enabled').filter(':visible').each(function () {
+                        fillerField($(this), formFillerParam);
                     });
                 }
             }

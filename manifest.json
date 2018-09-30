@@ -6,7 +6,7 @@
     "permissions": ["storage", "http://*/*", "https://*/*", "tabs"],
     "options_page": "options.html", 
     "background": {
-        "scripts": ["assets/jquery.js", "background.js"],
+        "scripts": ["background.js"],
         "persistent": false
     },
     "browser_action": {
