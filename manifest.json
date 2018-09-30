@@ -1,6 +1,6 @@
 {
     "name": "Fill-it",
-    "version": "1.0.2",
+    "version": "1.0.1",
     "short_name": "Fillit",
     "description": "Fill HTML form with fake values.",
     "permissions": ["storage", "http://*/*", "https://*/*", "tabs"],
